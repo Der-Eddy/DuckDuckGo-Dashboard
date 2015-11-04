@@ -4,7 +4,7 @@ My own approach on making a cool dashboard with the DuckDuckGo search!
 
 Usage
 -------------
-##### Check out: `https://duck.eddydev.de/`  
+##### Check out: `https://duck.eddydev.de`  
 
 Requirements
 -------------
@@ -16,6 +16,7 @@ ToDo
 - [x] DuckDuckGo Search
 - [ ] Adding weather
 - [ ] Adding RSS Feed
+- [ ] Adding random background image
 
 Screenshoots
 -------------
