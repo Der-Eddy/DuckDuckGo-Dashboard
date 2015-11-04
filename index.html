@@ -6,11 +6,26 @@
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="semantic-ui/semantic.min.css">
         <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.rss.min.js"></script>
         <script src="semantic-ui/semantic.min.js"></script>
         <style>
             body {background: #F7F7F7 none repeat scroll 0% 0%;}
-            h1 {font-size: 5em!important; font-weight: 100!important; margin-top: 20%!important; padding: 5%!important;} 
-            .footer {position:fixed; bottom:0px; font-size: 0.9em; padding: 3px;}
+            h1 {font-size: 5em!important; font-weight: 100!important; margin-top: 20%!important; padding: 5%!important;
+                color: #CCCCCC; text-shadow: 0 -1px 1px #666666, 0 1px 1px #FFFFFF;} 
+            #footer {position:fixed; bottom:0px; font-size: 0.8em; padding: 3px; background: #F7F7F7 none repeat scroll 0% 0%; opacity: 0.6;}
+            #rss {position: fixed; top:5%; right:5%; width: 200px; height: 400px; padding: 20px; color:black;
+                background: #F7F7F7 none repeat scroll 0% 0%;
+                opacity: 0.6;
+                -webkit-box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+                -moz-box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+                box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;}
+            .rail .segment {padding: 20px; color:black;
+                background: #F7F7F7 none repeat scroll 0% 0%;
+                opacity: 0.6;
+                -webkit-box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+                -moz-box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+                box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;}
+            .rail {margin: 4rem 0px 0px 2rem!important;}
         </style>
         <title>DuckDuckGo Dashboard</title>
     </head>
@@ -27,26 +42,72 @@
                   </div>
                 </form>
               </div>
+            <div class="ui left rail">
+                <div class="ui segment">
+                  Right Rail Content
+                </div>
+            </div>
+            <div class="ui right rail">
+                <div class="ui segment">
+                    <h4>Steam Game Sales</h4>
+                    <div id="rss-feed"></div>
+                </div>
+            </div>
             </div>
         </div>
 
-        <div class="footer">
-        <a href="https://www.eddydev.de/about.php">Impress</a> | Image of day by <span id="author"></span> (<a href="https://www.reddit.com/r/earthporn/">/r/earthporn</a>)
+        <div id="footer">
+        <a href="https://www.eddydev.de/about.php">Impress</a> | <span id="imagelink"></span> of day by <span id="author"></span> (<span id="subreddit"></span>)
         </div>
 
         <script>
-        $.getJSON( "https://www.reddit.com/r/earthporn/top.json?t=day&limit=10", function( data ) {
+        var subreddit = "earthporn";
+        
+
+        $.getJSON( "https://www.reddit.com/r/" + subreddit + "/top.json?t=day&limit=10", function( data ) {
                 var url = data.data.children[0].data.preview.images[0].source.url;
                 var author = data.data.children[0].data.author;
-                $("#author").text(author);
+                $("#imagelink").html("<a href=\"" + url + "\">Image</a>");
+                $("#author").html("<a href=\"https://www.reddit.com/user/" + author + "\">/u/" + author + "</a>");
+                $("#subreddit").html("<a href=\"https://www.reddit.com/r/" + subreddit + "\">/r/" + subreddit + "</a>");
                 console.log(author + " | " + url);
                 $('body').css('background', 'url(' + url + ') no-repeat center center fixed');
-              }).error(function() { console.log("Couldn't load image"); });
+                $('body').css('background-size', 'cover');
+              }).error(function() { console.log("Couldn't load image"); })
+            .done(function() {
+                    
+              });
 
         $(".form").submit(function( event ) {
             window.location.replace("https://duckduckgo.com/?q=" + $("#searchtext").val());
             event.preventDefault();
         });
+
+        $("#rss-feed").rss(
+          "https://isthereanydeal.com/rss/waitlist/0q46u:5cf44d74d6756256c395c0b56879111d/",
+          {
+            // how many entries do you want?
+            // default: 4
+            // valid values: any integer
+            limit: 10,
+            ssl: true,
+
+            // outer template for the html transformation
+            // default: "<ul>{entries}</ul>"
+            // valid values: any string
+            layoutTemplate: '<div class="ui relaxed divided list">{entries}</div>',
+
+            // inner template for each entry
+            // default: '<li><a href="{url}">[{author}@{date}] {title}</a><br/>{shortBodyPlain}</li>'
+            // valid values: any string
+            entryTemplate: '<div class="item"><i class="large steam middle aligned icon"></i><div class="content"><a class="header" href="{url}">{title}</a><div class="description">{shortBody}</div></div></div>',
+
+            // the effect, which is used to let the entries appear
+            // default: 'show'
+            // valid values: 'show', 'slide', 'slideFast', 'slideSynced', 'slideFastSynced'
+            effect: 'slideFastSynced',
+          }
+        )
         </script>
     </body>
 </html>
