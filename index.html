@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="semantic-ui/semantic.min.css">
+        <script src="js/jquery.min.js"></script>
+        <script src="semantic-ui/semantic.min.js"></script>
+        <style>
+            body {background: #F7F7F7 none repeat scroll 0% 0%;}
+            h1 {font-size: 5em!important; font-weight: 100!important; margin-top: 20%!important; padding: 5%!important;} 
+            .footer {position:fixed; bottom:0px; font-size: 0.9em; padding: 3px;}
+        </style>
+        <title>DuckDuckGo Dashboard</title>
+    </head>
+    <body>
+        <div class="ui stackable center alligned one column grid container">
+            <div class="column centered row">
+              <div class="column">
+                  <h1 class="ui center aligned header">DuckDuckGo Search</h1>
+              </div>
+              <div class="column">
+                  <form class="ui huge orange form">
+                  <div class="field">
+                    <input placeholder="Search Text" type="text" id="searchtext">
+                  </div>
+                </form>
+              </div>
+            </div>
+        </div>
+
+        <div class="footer">
+        <a href="https://www.eddydev.de/about.php">Impress</a>
+        </div>
+
+        <script>
+        $(".form").submit(function( event ) {
+            window.location.replace("https://duckduckgo.com/?q=" + $("#searchtext").val());
+            event.preventDefault();
+        });
+        </script>
+    </body>
+</html>
