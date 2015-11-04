@@ -18,7 +18,7 @@
         <div class="ui stackable center alligned one column grid container">
             <div class="column centered row">
               <div class="column">
-                  <h1 class="ui center aligned header">DuckDuckGo Search</h1>
+                  <h1 class="ui center aligned inverted header">DuckDuckGo Search</h1>
               </div>
               <div class="column">
                   <form class="ui huge orange form">
@@ -31,10 +31,16 @@
         </div>
 
         <div class="footer">
-        <a href="https://www.eddydev.de/about.php">Impress</a>
+        <a href="https://www.eddydev.de/about.php">Impress</a> | Image of day by <a href="https://www.reddit.com/r/earthporn/">/r/earthporn</a>
         </div>
 
         <script>
+        $.getJSON( "https://www.reddit.com/r/earthporn/top.json?t=day&limit=10", function( data ) {
+                var url = data.data.children[0].data.preview.images[0].source.url;
+                console.log(url);
+                $('body').css('background', 'url(' + url + ') no-repeat center center fixed');
+              }).error(function() { console.log("Couldn't load image"); });
+
         $(".form").submit(function( event ) {
             window.location.replace("https://duckduckgo.com/?q=" + $("#searchtext").val());
             event.preventDefault();

@@ -16,7 +16,7 @@ ToDo
 - [x] DuckDuckGo Search
 - [ ] Adding weather
 - [ ] Adding RSS Feed
-- [ ] Adding random background image
+- [x] Adding random background image
 
 Screenshoots
 -------------
