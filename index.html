@@ -44,10 +44,15 @@
               </div>
             <div class="ui left rail">
                 <div class="ui segment">
-                  Right Rail Content
+                    <h4>Heise IT News</h4>
+                    <div id="rss-feed-heise"></div>
                 </div>
             </div>
             <div class="ui right rail">
+                <div class="ui segment">
+                    <h4>Weather</h4>
+                    Weather
+                </div>
                 <div class="ui segment">
                     <h4>Steam Game Sales</h4>
                     <div id="rss-feed"></div>
@@ -62,7 +67,6 @@
 
         <script>
         var subreddit = "earthporn";
-        
 
         $.getJSON( "https://www.reddit.com/r/" + subreddit + "/top.json?t=day&limit=10", function( data ) {
                 var url = data.data.children[0].data.preview.images[0].source.url;
@@ -89,7 +93,7 @@
             // how many entries do you want?
             // default: 4
             // valid values: any integer
-            limit: 10,
+            limit: 5,
             ssl: true,
 
             // outer template for the html transformation
@@ -107,7 +111,33 @@
             // valid values: 'show', 'slide', 'slideFast', 'slideSynced', 'slideFastSynced'
             effect: 'slideFastSynced',
           }
-        )
+        );
+
+        $("#rss-feed-heise").rss(
+          "http://www.heise.de/newsticker/heise-top-atom.xml",
+          {
+            // how many entries do you want?
+            // default: 4
+            // valid values: any integer
+            limit: 5,
+            ssl: true,
+
+            // outer template for the html transformation
+            // default: "<ul>{entries}</ul>"
+            // valid values: any string
+            layoutTemplate: '<div class="ui relaxed divided list">{entries}</div>',
+
+            // inner template for each entry
+            // default: '<li><a href="{url}">[{author}@{date}] {title}</a><br/>{shortBodyPlain}</li>'
+            // valid values: any string
+            entryTemplate: '<div class="item"><i class="large rss middle aligned icon"></i><div class="content"><a class="header" href="{url}">{title}</a><div class="description">{shortBody}</div></div></div>',
+
+            // the effect, which is used to let the entries appear
+            // default: 'show'
+            // valid values: 'show', 'slide', 'slideFast', 'slideSynced', 'slideFastSynced'
+            effect: 'slideFastSynced',
+          }
+        );
         </script>
     </body>
 </html>
