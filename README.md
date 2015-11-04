@@ -15,13 +15,13 @@ ToDo
 -------------
 - [x] DuckDuckGo Search
 - [ ] Adding weather
-- [ ] Adding RSS Feed
+- [x] Adding RSS Feed
 - [x] Adding random background image
 
 Screenshoots
 -------------
 
-On Progress
+In Progress
 
 
 License
