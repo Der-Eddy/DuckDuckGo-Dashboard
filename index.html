@@ -31,13 +31,15 @@
         </div>
 
         <div class="footer">
-        <a href="https://www.eddydev.de/about.php">Impress</a> | Image of day by <a href="https://www.reddit.com/r/earthporn/">/r/earthporn</a>
+        <a href="https://www.eddydev.de/about.php">Impress</a> | Image of day by <span id="author"></span> (<a href="https://www.reddit.com/r/earthporn/">/r/earthporn</a>)
         </div>
 
         <script>
         $.getJSON( "https://www.reddit.com/r/earthporn/top.json?t=day&limit=10", function( data ) {
                 var url = data.data.children[0].data.preview.images[0].source.url;
-                console.log(url);
+                var author = data.data.children[0].data.author;
+                $("#author").text(author);
+                console.log(author + " | " + url);
                 $('body').css('background', 'url(' + url + ') no-repeat center center fixed');
               }).error(function() { console.log("Couldn't load image"); });
 
