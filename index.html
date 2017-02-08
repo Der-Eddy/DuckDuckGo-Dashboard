@@ -11,7 +11,7 @@
         <style>
             body {background: #F7F7F7 none repeat scroll 0% 0%;}
             h1 {font-size: 5em!important; font-weight: 100!important; margin-top: 20%!important; padding: 5%!important;
-                color: #CCCCCC; text-shadow: 0 -1px 1px #666666, 0 1px 1px #FFFFFF;} 
+                color: #CCCCCC; text-shadow: 0 -1px 1px #666666, 0 1px 1px #FFFFFF;}
             #footer {position:fixed; bottom:0px; font-size: 0.8em; padding: 3px; background: #F7F7F7 none repeat scroll 0% 0%; opacity: 0.6;}
             #rss {position: fixed; top:5%; right:5%; width: 200px; height: 400px; padding: 20px; color:black;
                 background: #F7F7F7 none repeat scroll 0% 0%;
@@ -62,15 +62,16 @@
         </div>
 
         <div id="footer">
-        <i class="icon info"></i><a href="https://www.eddydev.de/about.php">Impress</a> | <i class="icon github"></i><a href="https://github.com/Der-Eddy/DuckDuckGo-Dashboard">Github Repository</a> | <span id="imagelink"></span> of day by <span id="author"></span> (<span id="subreddit"></span>)
+        <i class="icon info"></i><a href="https://blog.eddy-dev.net/about/">Impress</a> | <i class="icon github"></i><a href="https://github.com/Der-Eddy/DuckDuckGo-Dashboard">Github Repository</a> | <span id="imagelink"></span> of the day by <span id="author"></span> (<span id="subreddit"></span>)
         </div>
 
         <script>
-        var subreddit = "earthporn";
+        var subreddits = "earthporn+spaceporn+cityporn+abandonedporn";
 
-        $.getJSON( "https://www.reddit.com/r/" + subreddit + "/top.json?t=day&limit=10", function( data ) {
+        $.getJSON( "https://www.reddit.com/r/" + subreddits + "/top.json?t=day&limit=10", function( data ) {
                 var url = data.data.children[0].data.preview.images[0].source.url;
                 var author = data.data.children[0].data.author;
+                var subreddit = data.data.children[0].data.subreddit;
                 $("#imagelink").html("<a href=\"" + url + "\">Image</a>");
                 $("#author").html("<a href=\"https://www.reddit.com/user/" + author + "\">/u/" + author + "</a>");
                 $("#subreddit").html("<a href=\"https://www.reddit.com/r/" + subreddit + "\">/r/" + subreddit + "</a>");
@@ -79,7 +80,7 @@
                 $('body').css('background-size', 'cover');
               }).error(function() { console.log("Couldn't load image"); })
             .done(function() {
-                    
+
               });
 
         $(".form").submit(function( event ) {
